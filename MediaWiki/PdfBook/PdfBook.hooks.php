@@ -77,6 +77,22 @@ class PdfBookHooks {
 				}
 			}
 
+                        //filter readable articles
+                        $filteredArticles= array();
+                        foreach ( $articles as $title ) {
+                                                        $printable=$title->userCan('read',$wgUser,'secure');
+                                                        if (!$printable) {
+                                                                $msg="#####Tom: Datei wurde entfernt:".$title->__toString();
+                                                                error_log($msg);
+                                                        }else {
+                                                                array_push($filteredArticles,$title);
+                                                        }
+                        }
+                        $articles = $filteredArticles;
+
+                        $printableArticles = count($filteredArticles);
+                        if ( $printableArticles == 0 ) return true;
+			
  			// Create a cache filename from the query-string parameters and the revision ID's of all the source articles
  			$cache = json_encode( $_GET );
  			foreach( $articles as $title ) $cache .= '-' . $title->getLatestRevID();
