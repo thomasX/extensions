@@ -15,7 +15,8 @@ class PdfBookHooks {
 	 */
 	public static function onUnknownAction( $action, $article ) {
 		global $wgOut, $wgUser, $wgParser, $wgRequest, $wgAjaxComments, $wgPdfBookDownload;
-		global $wgServer, $wgArticlePath, $wgScriptPath, $wgUploadPath, $wgUploadDirectory, $wgScript;
+		global $wgServer, $wgArticlePath, $wgScriptPath, $wgUploadPath, $wgUploadDirectory, $wgScript,$wgPdfBookPasswd;
+;
 
 		if( $action == 'pdfbook' ) {
 			$title = $article->getTitle();
@@ -144,6 +145,10 @@ class PdfBookHooks {
 				}
 
 				// Build the cache file
+                                $pdfpwd="";
+                                if ($wgPdfBookPasswd) $pdfpwd="--owner-password \"".$wgPdfBookPasswd."\" --user-password \"".$wgPdfBookPasswd."\" --encryption";
+
+				
 				if( $format == 'html' ) file_put_contents( $cache, $html );
 				else {
 
@@ -161,7 +166,7 @@ class PdfBookHooks {
 						. "$toc --no-title --numbered --charset $charset $options $layout $width";
 					$cmd = $format == 'htmltoc'
 						? "htmldoc -t html --format html $cmd \"$file\" "
-						: "htmldoc -t pdf --format pdf14 $cmd \"$file\" ";
+						: "htmldoc -t pdf $pdfpwd --format pdf14 $cmd \"$file\" ";
 
 					// Execute the command outputting to the cache file
 					putenv( "HTMLDOC_NOCGI=1" );
