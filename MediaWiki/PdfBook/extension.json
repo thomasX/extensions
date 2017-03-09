@@ -9,7 +9,8 @@
 	"callback": "PdfBookHooks::onRegistration",
 	"config": {
 		"wgPdfBookTab": false,           "@": "Whether or not an action tab is wanted for printing to PDF",
-		"wgPdfBookDownload": true,       "@": "Whether the files should be downloaded or view in-browser"
+		"wgPdfBookDownload": true,       "@": "Whether the files should be downloaded or view in-browser",
+		"PdfBookPasswd":"",              "@": "you can place here a pdf Password"
 	},
 	"Hooks": {
 		"UnknownAction": ["PdfBookHooks::onUnknownAction"],
