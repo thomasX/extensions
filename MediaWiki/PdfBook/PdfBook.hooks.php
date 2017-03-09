@@ -77,7 +77,9 @@ class PdfBookHooks {
 				}
 			}
 
+
 			//filter readable articles
+
                         $filteredArticles= array();
                         foreach ( $articles as $title ) {
                                                         $printable=$title->userCan('read',$wgUser,'secure');
@@ -92,7 +94,6 @@ class PdfBookHooks {
 
                         $printableArticles = count($filteredArticles);
                         if ( $printableArticles == 0 ) return true;
-
 
 			
  			// Create a cache filename from the query-string parameters and the revision ID's of all the source articles
